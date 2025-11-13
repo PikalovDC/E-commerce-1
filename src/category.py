@@ -41,6 +41,16 @@ class Category:
             Category.product_count += len(products)
         Category.category_count += 1
 
+    def __str__(self) -> str:
+        """
+        Строковое представление категории.
+
+        Returns:
+            str: "Название категории, количество продуктов: 200 шт."
+        """
+        total_quantity = sum(product.quantity for product in self._products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
     @property
     def products_count(self) -> int:
         """Количество товаров в этой категории"""
