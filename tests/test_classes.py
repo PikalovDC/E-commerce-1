@@ -40,7 +40,7 @@ def test_category_initialization():
 
     assert category.name == "Электроника"
     assert category.description == "Технические товары"
-    assert category.products == []
+    assert category.products == ""
 
 
 def test_category_count_increment():
@@ -85,11 +85,11 @@ def test_add_product_to_category():
     category.add_product(product1)
     category.add_product(product2)
 
-    assert len(category.products) == 2
-    assert product1 in category.products
-    assert product2 in category.products
-    assert category.products[0].name == "Футболка"
-    assert category.products[1].price == 5000.0
+    products_str = category.products
+    assert "Футболка" in products_str
+    assert "1500" in products_str
+    assert "Джинсы" in products_str
+    assert "5000" in products_str
 
 
 def test_multiple_categories_products_count():
@@ -109,5 +109,21 @@ def test_multiple_categories_products_count():
 
     assert Category.category_count == 2
     assert Category.product_count == 4
-    assert len(electronics.products) == 2
-    assert len(books.products) == 2
+    assert "Ноутбук" in electronics.products
+    assert "Телефон" in electronics.products
+    assert "Книга 1" in books.products
+    assert "Книга 2" in books.products
+
+
+def test_category_products_property():
+    """Тест property products в Category"""
+    category = Category("Электроника", "Техника")
+    product = Product("Ноутбук", "Игровой", 75000.0, 5)
+
+    category.add_product(product)
+
+    products_str = category.products
+    assert isinstance(products_str, str)
+    assert "Ноутбук" in products_str
+    assert "75000" in products_str
+    assert "Остаток: 5 шт." in products_str

@@ -8,7 +8,7 @@ class Category:
     Attributes:
         name (str): Название категории
         description (str): Описание категории
-        products (list[Product]): Список товаров категории (объекты класса Product)
+        _products (list[Product]): Приватный список товаров категории
 
     Class Attributes:
         category_count (int): Общее количество категорий
@@ -17,26 +17,34 @@ class Category:
 
     name: str
     description: str
-    products: list[Product]
+    _products: list[Product]  # Приватный атрибут
 
     # Атрибуты класса
     category_count: int = 0
     product_count: int = 0
 
-    def __init__(self, name: str, description: str) -> None:
+    def __init__(self, name: str, description: str, products: list[Product] = None) -> None:
         """
         Инициализация объекта Category.
 
         Args:
             name: Название категории
             description: Описание категории
+            products: Начальный список товаров (опционально)
         """
         self.name = name
         self.description = description
-        self.products = []
+        self._products = products if products is not None else []
 
-        # Увеличиваем счетчик категорий
+        # Увеличиваем счетчики
+        if products:
+            Category.product_count += len(products)
         Category.category_count += 1
+
+    @property
+    def products_count(self) -> int:
+        """Количество товаров в этой категории"""
+        return len(self._products)
 
     def add_product(self, product: Product) -> None:
         """
@@ -45,6 +53,24 @@ class Category:
         Args:
             product: Объект товара для добавления
         """
-        self.products.append(product)
-        # Увеличиваем счетчик уникальных товаров при добавлении
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self._products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError("Можно добавлять только объекты класса Product")
+
+    @property
+    def products(self) -> str:
+        """
+        Геттер для получения списка товаров в виде строки.
+
+        Returns:
+            str: Строка с перечислением товаров в формате:
+                 "Название продукта, 80 руб. Остаток: 15 шт."
+        """
+        products_list = []
+        for product in self._products:
+            product_info = f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            products_list.append(product_info)
+
+        return "\n".join(products_list)
