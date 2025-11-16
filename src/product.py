@@ -29,6 +29,24 @@ class Product:
         self._price = price  # Устанавливаем через приватный атрибут
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """
+        Строковое представление продукта.
+
+        Returns:
+            str: "Название продукта, 80 руб. Остаток: 15 шт."
+        """
+        return f"{self.name}, {self._price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other) -> float:
+        """
+        Сложение продуктов - возвращает общую стоимость всех товаров на складе.
+        """
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты класса Product")
+
+        return (self._price * self.quantity) + (other._price * other.quantity)
+
     @property
     def price(self) -> float:
         """
