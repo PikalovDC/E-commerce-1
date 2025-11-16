@@ -38,6 +38,10 @@ class Category:
 
         # Увеличиваем счетчики
         if products:
+            # Проверяем что все товары являются Product или его наследниками
+            for product in products:
+                if not isinstance(product, Product):
+                    raise TypeError("Можно добавлять только объекты класса Product или его наследников")
             Category.product_count += len(products)
         Category.category_count += 1
 
@@ -59,15 +63,12 @@ class Category:
     def add_product(self, product: Product) -> None:
         """
         Добавляет товар в категорию и увеличивает счетчик уникальных товаров.
-
-        Args:
-            product: Объект товара для добавления
         """
-        if isinstance(product, Product):
-            self._products.append(product)
-            Category.product_count += 1
-        else:
-            raise TypeError("Можно добавлять только объекты класса Product")
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты класса Product или его наследников")
+
+        self._products.append(product)
+        Category.product_count += 1
 
     @property
     def products(self) -> str:

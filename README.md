@@ -20,6 +20,13 @@ from product import Product
 # Создание товара
 product = Product("Ноутбук", "Мощный игровой ноутбук", 75000.0, 5)
 
+**Магические методы:**
+- `__str__` - строковое представление: "Название, цена руб. Остаток: количество шт."
+- `__add__` - сложение товаров (только одинаковых классов)
+
+**Методы:**
+- `new_product(product_data)` - класс-метод для создания из словаря
+
 
 ### Category
 Класс для представления категории товаров.
@@ -61,6 +68,64 @@ electronics.add_product(mouse)
 # Доступ к статистике
 print(f"Всего категорий: {Category.category_count}")
 print(f"Всего товаров: {Category.product_count}")
+
+### Класс Smartphone (Наследник Product)
+
+**Дополнительные атрибуты:**
+- `efficiency` (float) - производительность
+- `model` (str) - модель
+- `memory` (int) - объем памяти (ГБ)
+- `color` (str) - цвет
+
+### Класс LawnGrass (Наследник Product)
+
+**Дополнительные атрибуты:**
+- `country` (str) - страна-производитель
+- `germination_period` (int) - срок прорастания (дни)
+- `color` (str) - цвет
+
+### Наследование и специализированные классы
+
+from src.product import Smartphone, LawnGrass
+
+### Создание смартфона
+smartphone = Smartphone(
+    "iPhone 15", 
+    "Флагманский смартфон", 
+    150000.0, 
+    5,
+    efficiency=3.5, 
+    model="15 Pro", 
+    memory=256, 
+    color="Black"
+)
+
+### Создание газонной травы
+grass = LawnGrass(
+    "Газонная трава Premium", 
+    "Высококачественная трава", 
+    5000.0, 
+    20,
+    country="Германия", 
+    germination_period=14, 
+    color="Зеленый"
+)
+
+### Товары можно складывать только если они одного класса:
+
+### Работает - одинаковые классы
+smartphone1 = Smartphone("S1", "Desc", 1000.0, 2, 1.0, "M", 64, "Black")
+smartphone2 = Smartphone("S2", "Desc", 2000.0, 3, 1.0, "M", 64, "Black")
+total = smartphone1 + smartphone2  # (1000×2) + (2000×3) = 8000
+
+### Вызывает TypeError - разные классы
+smartphone = Smartphone("S", "Desc", 1000.0, 2, 1.0, "M", 64, "Black")
+grass = LawnGrass("G", "Desc", 500.0, 4, "RU", 10, "Green")
+total = smartphone + grass  # TypeError: Нельзя складывать товары разных классов
+
+### Вызывает TypeError - не товар
+smartphone = Smartphone("S", "Desc", 1000.0, 2, 1.0, "M", 64, "Black")
+total = smartphone + "не товар"  # TypeError: Можно складывать только объекты класса Product
 
 # Тестирование
 ## Установка Pytest
