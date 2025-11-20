@@ -1,7 +1,7 @@
 import pytest
 
 from src.category import Category
-from src.product import Product
+from src.product import Product, Smartphone, LawnGrass
 
 
 def setup_function():
@@ -66,14 +66,21 @@ def test_product_addition_with_different_prices():
     assert result == expected
 
 
-def test_product_addition_type_error():
-    """Тест ошибки при сложении с неправильным типом"""
-    product = Product("Тест", "Описание", 1000.0, 5)
+def test_addition_same_base_class_but_different():
+    """Тест что даже наследники Product не складываются между собой"""
+    smartphone = Smartphone("S", "Desc", 1000.0, 2, 1.0, "M", 64, "Black")
+    grass = LawnGrass("G", "Desc", 500.0, 4, "RU", 10, "Green")
+    product = Product("P", "Desc", 300.0, 5)
 
-    with pytest.raises(TypeError) as exc_info:
-        _ = product + "не продукт"
+    # Нельзя складывать разные классы, даже если они наследники Product
+    with pytest.raises(TypeError):
+        _ = smartphone + grass
 
-    assert "Можно складывать только объекты класса Product" in str(exc_info.value)
+    with pytest.raises(TypeError):
+        _ = smartphone + product
+
+    with pytest.raises(TypeError):
+        _ = grass + product
 
 
 def test_product_addition_with_zero_quantity():
