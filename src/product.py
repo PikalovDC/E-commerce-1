@@ -1,6 +1,6 @@
 class Product:
     """
-    Класс для представления продукта.
+    Базовый класс для представления продукта.
 
     Attributes:
         name (str): Название продукта
@@ -39,11 +39,8 @@ class Product:
         return f"{self.name}, {self._price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other) -> float:
-        """
-        Сложение продуктов - возвращает общую стоимость всех товаров на складе.
-        """
-        if not isinstance(other, Product):
-            raise TypeError("Можно складывать только объекты класса Product")
+        if type(other) != type(self):
+            raise TypeError("Нельзя складывать товары разных классов")
 
         return (self._price * self.quantity) + (other._price * other.quantity)
 
@@ -110,3 +107,47 @@ class Product:
 
         # Создаем и возвращаем объект Product
         return cls(name, description, price, quantity)
+
+
+class Smartphone(Product):
+    """
+    Класс для представления смартфона.
+
+    Attributes:
+        efficiency (float): Производительность
+        model (str): Модель
+        memory (int): Объем встроенной памяти (ГБ)
+        color (str): Цвет
+    """
+
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 efficiency: float, model: str, memory: int, color: str) -> None:
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.model}), {self._price} руб. Остаток: {self.quantity} шт."
+
+
+class LawnGrass(Product):
+    """
+    Класс для представления газонной травы.
+
+    Attributes:
+        country (str): Страна-производитель
+        germination_period (int): Срок прорастания (дни)
+        color (str): Цвет
+    """
+
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 country: str, germination_period: int, color: str) -> None:
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __str__(self) -> str:
+        return f"{self.name}, {self._price} руб. Остаток: {self.quantity} шт."
