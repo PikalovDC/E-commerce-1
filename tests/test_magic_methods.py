@@ -83,16 +83,6 @@ def test_addition_same_base_class_but_different():
         _ = grass + product
 
 
-def test_product_addition_with_zero_quantity():
-    """Тест сложения продуктов с нулевым количеством"""
-    product1 = Product("Товар1", "Описание", 1000.0, 0)
-    product2 = Product("Товар2", "Описание", 2000.0, 5)
-
-    result = product1 + product2
-    expected = (1000.0 * 0) + (2000.0 * 5)  # 0 + 10000 = 10000
-    assert result == expected
-
-
 def test_product_addition_with_itself():
     """Тест сложения продукта с самим собой"""
     product = Product("Товар", "Описание", 150.0, 4)

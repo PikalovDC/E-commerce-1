@@ -85,3 +85,16 @@ class Category:
             products_list.append(product_info)
 
         return "\n".join(products_list)
+
+    def average_price(self):
+        """
+        Рассчитывает среднюю цену товаров в категории.
+        """
+        if not self._products:
+            return 0
+
+        try:
+            total_price = sum(product.price for product in self._products)
+            return total_price / len(self._products)
+        except ZeroDivisionError:
+            return 0
