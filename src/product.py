@@ -1,4 +1,8 @@
-class Product:
+from src.abstract_product import BaseProduct
+from src.mixins import ReprMixin
+
+
+class Product(ReprMixin, BaseProduct):
     """
     Базовый класс для представления продукта.
 
@@ -15,6 +19,7 @@ class Product:
     quantity: int
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
+        super().__init__(name, description, price, quantity)
         """
         Инициализация объекта Product.
 

@@ -47,13 +47,13 @@ def test_category_count_increment():
     """Тест подсчета количества категорий"""
     assert Category.category_count == 0
 
-    category1 = Category("Категория 1", "Описание 1")
+    Category("Категория 1", "Описание 1")
     assert Category.category_count == 1
 
-    category2 = Category("Категория 2", "Описание 2")
+    Category("Категория 2", "Описание 2")
     assert Category.category_count == 2
 
-    category3 = Category("Категория 3", "Описание 3")
+    Category("Категория 3", "Описание 3")
     assert Category.category_count == 3
 
 
