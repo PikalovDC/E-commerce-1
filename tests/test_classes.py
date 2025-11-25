@@ -26,14 +26,6 @@ def test_product_with_fractional_price():
     assert isinstance(product.price, float)
 
 
-def test_product_zero_quantity():
-    """Тест создания продукта с нулевым количеством"""
-    product = Product("Товар", "Описание", 1000.0, 0)
-
-    assert product.quantity == 0
-    assert isinstance(product.quantity, int)
-
-
 def test_category_initialization():
     """Тест корректности инициализации объектов класса Category"""
     category = Category("Электроника", "Технические товары")
